@@ -3,13 +3,15 @@ import {PersonService} from "../../service/person.service";
 import {DatePipe} from "@angular/common";
 import {Person} from "../../model/person";
 import {PersonCardComponent} from "../../shared/person-card/person-card.component";
+import {DateCircleComponent} from "../../shared/date-circle/date-circle.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     DatePipe,
-    PersonCardComponent
+    PersonCardComponent,
+    DateCircleComponent
   ],
   template: `
     <h2>Upcoming birthday</h2>
@@ -21,6 +23,9 @@ import {PersonCardComponent} from "../../shared/person-card/person-card.componen
         }
       </div>
       <svg (click)="scrollOneRight()" class="chevron-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>
+    </div>
+    <div class="container">
+      <app-date-circle [monthlyCount]="getMonthlyCount()"></app-date-circle>
     </div>
   `,
   styles: `
@@ -40,6 +45,9 @@ import {PersonCardComponent} from "../../shared/person-card/person-card.componen
 
     .container {
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .person-card-list {
@@ -139,5 +147,9 @@ export class HomeComponent {
   personCardWidth() {
     console.log(this.slider.nativeElement.querySelector('app-person-card').clientWidth);
     return this.slider.nativeElement.querySelector('app-person-card').clientWidth;
+  }
+
+  getMonthlyCount() {
+    return this.personService.getMonthlyCount();
   }
 }

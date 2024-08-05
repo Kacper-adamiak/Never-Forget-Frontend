@@ -45,4 +45,10 @@ export class PersonService {
     return year - person.year;
   }
 
+  getMonthlyCount(): number[] {
+    const monthlyCount: number[] = new Array(12).fill(0);
+    this.persons.forEach(p => monthlyCount[p.month-1]++);
+    return monthlyCount;
+  }
+
 }
